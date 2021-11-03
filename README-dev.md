@@ -1,5 +1,11 @@
 # README for dev
 
+## Introduce
+
+  Clone, Build and debug
+
+  Terraform Sample: [tfexample-vmworkstation](https://github.com/huhongjun/tfexample-vmworkstation)
+
 ## prerequisites
 
   Ubunt 20.04
@@ -8,15 +14,21 @@
 
 ## Cloning the Project, then build
 
+  Makefile line 23, 
+```  
+  @GOOS=linux CGO_ENABLED=0  go build -o $(BINARY) $(SOURCE)
+```
+  Build the binary
+~~~
   git clone git@github.com:elsudano/terraform-provider-vmworkstation
   //CGO_ENABLED=0
   make clean
   make build
-
+~~~
 ## Debbuging
 
-  deev.tfrc
-
+  config local development by config file dev.tfrc
+```
   provider_installation {
 
     # Use /home/axe/workshop/terraform-provider-vmworkstation/release as an overridden package directory
@@ -33,7 +45,10 @@
     # the dev_overrides block, and so no other providers will be available.
     direct {}
   }
+```
 
+terraform test
+```
   export TL_DEBUG=true
   export TF_LOG=TRACE # INFO, DEBUG, TRACE
   export TF_LOG_PATH="terraform.log"
@@ -50,3 +65,4 @@
   rm terraform.log
   //rm /home/axe/vmware/vm-tf1 -rf
   terraform apply -auto-approve
+```
